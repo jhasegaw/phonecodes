@@ -75,12 +75,18 @@ def read_isle_dictfile(filename,language,params):
     '''Read from ISLE-formatted dictfile, which is just IPA pronunciations,
     but word has parentheses and part of speech to be removed.
     If params['discard_phones'] is a set of chars, then any phones in the set
-    will be discarded.  For example, '#.' discards morph and syl boundaries.
+    will be discarded.  For example, set('#.') discards morph, syl boundaries.
+    If params['discard_diacritics'] is a strings, then chars in the string
+    will be discarded.  For example, 'ˈˌ' discards stress markers.
     '''
     S = []
     with open(filename) as f:
         for line in f:
-            words = re.split(r'\s+',re.sub(r'\(.*\)','',line.strip()))
+            txt=re.sub(r'\([^\)]*\)','',line.rstrip())
+            if 'discard_diacritics' in params:
+                patstr=r'[%s]+'%(params['discard_diacritics'])
+                txt = re.sub(patstr,'',txt)
+            words = re.split(r'\s+',txt)
             if 'discard_phones' in params:
                 pr=[p for p in words[1:] if p not in params['discard_phones']]
             else:
@@ -178,7 +184,7 @@ def write_dictfile(w2p, filename):
     lines2write = set()  # make sure each written line is unique
     for (w,pron) in w2p.items():
         if len(w)>0 and len(pron)>0:
-            pl = [ re.sub(r"\s*͡\s*",'',p)
+            pl = [ re.sub(r"\s*Í¡\s*",'',p)
                    for p in pron if not p.isspace() and len(p)>0 ]
             pstr = ' '.join(pl)
             if len(pstr) > 0:
