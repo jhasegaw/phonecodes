@@ -94,58 +94,59 @@ def test_phone_edit_distance(lex_objects, tokenized_sentences):
     res = lex_objects[srcfile][c1].phones2words(tokenized_sentences[lang][c1], 2)
     # Test phones2words with 0, 1 or 2 phone distance allowed
     assert res[0] == [["this", "is", "a", "test"]]
-    assert len(res[1]) == 6
-    assert set(res[1]) == set(
-        [
-            "a this is a test",
-            "this a is a test",
-            "this is a a test",
-            "this is a a test",
-            "this is a test a",
-            "this is test",
-        ]
-    )
 
-    assert len(res[2]) == 37
-    assert set(res[2]) == set(
-        [
-            "a a this is a test",
-            "a this a is a test",
-            "a this is a a test",
-            "a this is a a test",
-            "a this is a test a",
-            "a this is test",
-            "is is a test",
-            "is this is a test",
-            "this a a is a test",
-            "this a is a a test",
-            "this a is a a test",
-            "this a is a test",
-            "this a is a test a",
-            "this a is test",
-            "this is a a a test",
-            "this is a a a test",
-            "this is a a a test",
-            "this is a a test",
-            "this is a a test a",
-            "this is a a test a",
-            "this is a is test",
-            "this is a test",
-            "this is a test",
-            "this is a test",
-            "this is a test",
-            "this is a test",
-            "this is a test",
-            "this is a test",
-            "this is a test",
-            "this is a test",
-            "this is a test a a",
-            "this is a test is",
-            "this is is a test",
-            "this is is a test",
-            "this is is a test",
-            "this is is test",
-            "this is test a",
-            "this this a test",
-        ]
-    )
+    # I don't know why there are repeats, but this is what the original code output
+    assert len(res[1]) == 6
+    expected_dist_1 = [
+        "a this is a test",
+        "this a is a test",
+        "this is a a test",
+        "this is a a test",
+        "this is a test a",
+        "this is test",
+    ]
+    assert res[1] == [s.split() for s in expected_dist_1]            
+
+    expected_dist_2 = [
+        "a a this is a test",
+        "a this a is a test",
+        "a this is a a test",
+        "a this is a a test",
+        "a this is a test a",
+        "a this is test",
+        "is is a test",
+        "is this is a test",
+        "this a a is a test",
+        "this a is a a test",
+        "this a is a a test",
+        "this a is a test",
+        "this a is a test a",
+        "this a is test",
+        "this is a a a test",
+        "this is a a a test",
+        "this is a a a test",
+        "this is a a test",
+        "this is a a test a",
+        "this is a a test a",
+        "this is a is test",
+        "this is a test",
+        "this is a test",
+        "this is a test",
+        "this is a test",
+        "this is a test",
+        "this is a test",
+        "this is a test",
+        "this is a test",
+        "this is a test",
+        "this is a test a a",
+        "this is a test is",
+        "this is is a test",
+        "this is is a test",
+        "this is is a test",
+        "this is is test",
+        "this is test a",
+        "this this a test",
+    ]
+
+    assert len(res[2]) == 38
+    assert res[2] == [s.split() for s in expected_dist_2]
