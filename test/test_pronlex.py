@@ -1,15 +1,13 @@
-import sys, os, re
-import pprint
-import filecmp
+""" Load some pronlexes from the 'fixtures' subdirectory, 
+test phone code conversion, and test both word and phone searches.
+"""
+import re
+
+import pytest
+
 import phonecodes.pronlex as pronlex
 
-"""This script should be run from the command line, in the test directory.
-   It will load some pronlexes from the 'fixtures' subdirectory,
-   test phone code conversion, and test both word and phone searches."""
-
-os.makedirs("outputs", exist_ok=True)
-
-fixtures = [
+pronlex_conversions = [
     ["isle_eng_sample", ["arpabet", "disc", "xsampa"]],
     ["babel_amh_sample", ["xsampa"]],
     ["babel_ben_sample", ["xsampa"]],
@@ -20,98 +18,134 @@ fixtures = [
     ["callhome_cmn_sample", ["callhome", "xsampa"]],
     ["callhome_spa_sample", ["callhome", "xsampa"]],
 ]
-p = {}
-original = sys.stdout
-sys.stdout = open(os.path.join("outputs", "test_pronlex.txt"), "w")
 
-#########################################################################
-# Test reading in dictionaries, converting phonecodes, and writing them
-for fixture in fixtures:
-    srcfile = fixture[0]
-    p[srcfile] = {}
-    (dtype, lang, rem) = srcfile.split("_")
-    dict_params = {}
-    if dtype == "isle":
-        dict_params["discard_phones"] = "#."
-    print("Reading %s dict in %s from %s" % (dtype, lang, srcfile))
-    p[srcfile]["ipa"] = pronlex.read(
-        os.path.join("fixtures", srcfile) + ".txt", lang, dtype, dict_params
-    ).recode("ipa")
 
-    # Convert to each target code, and back again, and check results
-    for c1 in fixture[1]:
+# Read test dictionaries in
+@pytest.fixture(scope="module")
+def lex_objects(fixture_path):
+    results = {}
+    for identifier, codes in pronlex_conversions:
+        results[identifier] = {}
+        (dtype, lang, rem) = identifier.split("_")
+        dict_params = {}
+        if dtype == "isle":
+            dict_params["discard_phones"] = "#."
+
+        # Read in sample file and code as IPA
+        results[identifier]["ipa"] = pronlex.read(
+            fixture_path / f"{identifier}.txt", lang, dtype, dict_params
+        ).recode("ipa")
+
+        # Recode into supported alphabets
+        for c in codes:
+            results[identifier][c] = results[identifier]["ipa"].recode(c)
+    return results
+
+
+# Check converting between IPA and other phone codes works
+@pytest.mark.parametrize("srcfile, codes", pronlex_conversions)
+def test_dictionaries_convert_phonecodes(
+    srcfile, codes, tmp_path, fixture_path, lex_objects
+):
+    for c1 in codes:
         for c in [["ipa", c1], [c1, "ipa"]]:
-            print("##########################################################")
-            print("# Testing %s[%s].recode(%s)" % (srcfile, c[0], c[1]))
-            p[srcfile][c[1]] = p[srcfile][c[0]].recode(c[1])
             destfile = re.sub(r"sample", c[1], srcfile)
-            print("%s -> %s" % (srcfile, destfile))
-            p[srcfile][c[1]].save(os.path.join("outputs", destfile) + ".txt")
-            with open(os.path.join("fixtures", destfile) + ".txt") as f:
-                flines = f.readlines()
-                flines.append("-----\n")
-            with open(os.path.join("outputs", destfile) + ".txt") as f:
-                olines = f.readlines()
-                olines.append("-----\n")
-            if flines == olines:
-                print("Pass")
-            else:
-                print("".join(["FAIL\n"] + flines + olines))
 
-####################################################################
-# Test looking up words
-from sentences import sents
+            # Save lex output to temp dir
+            lex_objects[srcfile][c[1]].save(tmp_path / f"{destfile}.txt")
+            expected = (fixture_path / f"{destfile}.txt").read_text()
+            output = (tmp_path / f"{destfile}.txt").read_text()
+            assert output == expected
 
-slists = {
-    L: {c: [p for p in S.split(" ")] for (c, S) in D.items()}
-    for (L, D) in sents.items()
-}
-for fixture in fixtures:
-    srcfile = fixture[0]
+
+@pytest.mark.parametrize("srcfile, codes", pronlex_conversions)
+def test_words2phones(srcfile, codes, tokenized_sentences, lex_objects):
     (dtype, lang, rem) = srcfile.split("_")
-    for c1 in ["ipa"] + fixture[1]:
-        # Test words2phones
-        print("##########################################################")
-        print("# Testing words2phones(%s,%s)" % (srcfile, c1))
+    for code in ["ipa"] + codes:
+        res = lex_objects[srcfile][code].words2phones(tokenized_sentences[lang]["word"])
+        assert res == tokenized_sentences[lang][code]
 
-        res = p[srcfile][c1].words2phones(slists[lang]["word"])
-        pat = re.compile(" ".join(slists[lang][c1]), re.IGNORECASE)
-        if res == slists[lang][c1]:
-            print("Pass")
-        else:
-            print("FAIL")
-            m = min(len(res), len(slists[lang][c1]))
-            for n in range(0, m):
-                if slists[lang][c1][n] == res[n]:
-                    print("%s == %s" % (res[n], slists[lang][c1][n]))
-                else:
-                    print("%s != %s" % (res[n], slists[lang][c1][n]))
-            if len(slists[lang][c1]) > m:
-                print("Ref chars not in hyp:" + ":".join(slists[lang][c1][m:]))
-            elif len(res) > m:
-                print("Hyp chars not in ref:" + ":".join(res[m:]))
-
-        # Test phones2words
-        print("##########################################################")
-        print("# Testing phones2words(%s,%s)" % (srcfile, c1))
-        res = p[srcfile][c1].phones2words(slists[lang][c1])
-        pat = re.compile(" ".join(slists[lang]["word"]), re.IGNORECASE)
-        if any(re.match(pat, " ".join(x)) for x in res[0]):
-            print("Pass")
-        else:
-            print("FAIL")
-            print("Target:" + ":".join(slists[lang]["word"]))
-            print("Results:[" + "][".join([":".join(x) for x in res]) + "]")
+        # Possible failure modes - leftover from old test code, might be helpful for debugging
+        # m = min(len(res), len(tokenized_sentences[lang][code]))
+        # for n in range(0, m):
+        #    if tokenized_sentences[lang][code][n] == res[n]:
+        #        print("%s == %s" % (res[n], tokenized_sentences[lang][code][n]))
+        #    else:
+        #        print("%s != %s" % (res[n], tokenized_sentences[lang][code][n]))
+        # if len(tokenized_sentences[lang][code]) > m:
+        #    print("Ref chars not in hyp:" + ":".join(tokenized_sentences[lang][code][m:]))
+        # elif len(res) > m:
+        #    print("Hyp chars not in ref:" + ":".join(res[m:]))
 
 
-# Test phones2words with 1 or 2 phone distance allowed
-print("\n##########################################################")
-print("# Testing phones2words(isle_eng_sample) with dist==2")
-srcfile = "isle_eng_sample"
-lang = "eng"
-c1 = "ipa"
-res = p[srcfile][c1].phones2words(slists[lang][c1], 2)
-for d in sorted(res.keys()):
-    print("### Candidates with string edit distance == %d" % (d))
-    for c in res[d]:
-        print(" ".join(c))
+@pytest.mark.parametrize("srcfile, codes", pronlex_conversions)
+def test_phones2words(srcfile, codes, tokenized_sentences, lex_objects):
+    (dtype, lang, rem) = srcfile.split("_")
+    for code in ["ipa"] + codes:
+        res = lex_objects[srcfile][code].phones2words(tokenized_sentences[lang][code])
+        pat = re.compile(" ".join(tokenized_sentences[lang]["word"]), re.IGNORECASE)
+        assert any(re.match(pat, " ".join(x)) for x in res[0])
+
+
+def test_phone_edit_distance(lex_objects, tokenized_sentences):
+    srcfile = "isle_eng_sample"
+    lang = "eng"
+    c1 = "ipa"
+    res = lex_objects[srcfile][c1].phones2words(tokenized_sentences[lang][c1], 2)
+    # Test phones2words with 0, 1 or 2 phone distance allowed
+    assert res[0] == [["this", "is", "a", "test"]]
+    assert len(res[1]) == 6
+    assert set(res[1]) == set(
+        [
+            "a this is a test",
+            "this a is a test",
+            "this is a a test",
+            "this is a a test",
+            "this is a test a",
+            "this is test",
+        ]
+    )
+
+    assert len(res[2]) == 37
+    assert set(res[2]) == set(
+        [
+            "a a this is a test",
+            "a this a is a test",
+            "a this is a a test",
+            "a this is a a test",
+            "a this is a test a",
+            "a this is test",
+            "is is a test",
+            "is this is a test",
+            "this a a is a test",
+            "this a is a a test",
+            "this a is a a test",
+            "this a is a test",
+            "this a is a test a",
+            "this a is test",
+            "this is a a a test",
+            "this is a a a test",
+            "this is a a a test",
+            "this is a a test",
+            "this is a a test a",
+            "this is a a test a",
+            "this is a is test",
+            "this is a test",
+            "this is a test",
+            "this is a test",
+            "this is a test",
+            "this is a test",
+            "this is a test",
+            "this is a test",
+            "this is a test",
+            "this is a test",
+            "this is a test a a",
+            "this is a test is",
+            "this is is a test",
+            "this is is a test",
+            "this is is a test",
+            "this is is test",
+            "this is test a",
+            "this this a test",
+        ]
+    )
