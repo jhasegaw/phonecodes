@@ -1,9 +1,9 @@
 """Load some pronlexes from the 'fixtures' subdirectory,
 test phone code conversion, and test both word and phone searches.
 """
-
-
 import phonecodes.phonecodes as phonecodes
+
+import pytest
 
 
 # Test the phonecode conversions
