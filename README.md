@@ -36,10 +36,10 @@ Note that for 'callhome' and 'disc' you should also specify a language code from
 If you are working with specific corpora, you can also convert between certain corpus formats as follows:
 ```
 >>> from phonecodes import pronlex
->>> my_lex = pronlex.read("test/fixtures/isle_eng_sample.txt", "eng", "isle") # Read in ISLE corpus file
+>>> my_lex = pronlex.read("test/fixtures/isle_eng_sample.txt", "isle", "eng") # Read in an English ISLE corpus file
 >>> my_lex.w2p # see orthographic to phonetic word mapping
 {'a': ['#', 'ə', '#'], 'is': ['#', 'ɪ', 'z', '#'], 'test': ['#', 't', 'ˈɛ', 's', 't', '#'], 'this': ['#', 'ð', 'ɪ', 's', '#']}
-new_lex = my_lex.recode('arpabet')
+new_lex = my_lex.recode('arpabet') # Convert mapping to ARPABET
 >>> new_lex.w2p
 {'a': ['#', 'AH0', '#'], 'is': ['#', 'IH', 'Z', '#'], 'test': ['#', 'T', 'EH1', 'S', 'T', '#'], 'this': ['#', 'DH', 'IH', 'S', '#']}
 ```
