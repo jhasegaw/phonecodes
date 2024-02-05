@@ -1,3 +1,7 @@
+"""
+Tools for reading, writing, converting, and searching pronunciation lexicon files in several standard formats.
+"""
+
 import re
 import phonecodes.phonecodes as phonecodes
 import phonecodes.phonecode_tables as phonecode_tables
@@ -76,9 +80,10 @@ def read_raw_dictfile(filename, language):
     return S
 
 
-def read_isle_dictfile(filename, language, params):
+def read_isle_dictfile(filename, params, language=None):
     """Read from ISLE-formatted dictfile, which is just IPA pronunciations,
     but word has parentheses and part of speech to be removed.
+    See ELRA for info on the ISLE corpus at https://catalog.elra.info/en-us/repository/browse/ELRA-S0083/.
     If params['discard_phones'] is a set of chars, then any phones in the set
     will be discarded.  For example, set('#.') discards morph, syl boundaries.
     If params['discard_diacritics'] is a strings, then chars in the string
@@ -127,8 +132,9 @@ _babel_pcols = {
 }
 
 
-def read_babel_dictfile(filename, lang, params):
+def read_babel_dictfile(filename, params, lang):
     """Read from a Babel dictfile in language lang.
+    See https://en.wikipedia.org/wiki/BABEL_Speech_Corpus for info on the Babel Corpus.
     If params['pcol'], then it specifies which column contains phones.
     Otherwise, try to guess based on language.
     """
@@ -150,8 +156,9 @@ def read_babel_dictfile(filename, lang, params):
 _celex_pcols = {"eng": 6, "deu": 4, "nld": 4}
 
 
-def read_celex_dictfile(filename, lang, params):
-    """Read from a CELEX dictfile in language lang.'
+def read_celex_dictfile(filename, params, lang):
+    """Read from a CELEX dictfile in language lang.
+    See Language Data Consortium for info on the CELEX corpus at https://catalog.ldc.upenn.edu/LDC96L14.
     If params['pcol'] exists, it should be an integer,
     specifying which column contains the phonemes.
     """
@@ -176,8 +183,9 @@ def read_celex_dictfile(filename, lang, params):
 _callhome_columns = {"arz": (1, 2, 3), "cmn": (0, 3, 2), "spa": (0, 2, 3)}
 
 
-def read_callhome_dictfile(filename, L, params):
+def read_callhome_dictfile(filename, params, L):
     """Read a callhome dictionary in language L.
+    See TalkBank for info on the CallHome corpora at https://sla.talkbank.org/TBB/ca/CallHome.
     If params['callhome_columns'] exists, then it should be a tuple
     (grapheme column, phone column, tone column).
     """
@@ -303,9 +311,11 @@ class lex:
                 pron.append(w)
         return pron
 
-    def read(self, filename, lang, dicttype, params={}):
+    def read(self, filename, lang, dicttype, params=None):
+        if params is None:
+            params = {}
         if dicttype in _dictread:
-            plist = _dictread[dicttype](filename, lang, params)
+            plist = _dictread[dicttype](filename, params, lang)
             for p in plist:
                 self.add(p[0], p[1])
         else:
@@ -318,10 +328,25 @@ class lex:
         write_dictfile(self.w2p, filename)
 
 
-_dict2phonecode = {"babel": "xsampa", "celex": "disc", "isle": "ipa"}
+_dict2phonecode = {
+    "babel": "xsampa",
+    "celex": "disc",
+    "isle": "ipa",
+}
 
 
-def read(filename, lang, dicttype, params={}):
+def read(filename, dicttype, lang=None, params=None):
+    """Read a corpus file in the given language and format.
+
+    Args:
+        filename (str|Path): The file path
+        dicttype (str): Corpus format: "babel", "celex", "isle"
+        lang (str): A valid language for the corpus/phonetic alphabet
+        params (dict, optional): Override special parameters for parsing that may be unique to a corpus format. Defaults to None.
+
+    Returns:
+        lex: The resulting lex object parsed form the file
+    """
     if dicttype in _dict2phonecode:
         newlex = lex(lang, _dict2phonecode[dicttype])
     else:

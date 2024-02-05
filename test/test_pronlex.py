@@ -32,7 +32,7 @@ def lex_objects(fixture_path):
             dict_params["discard_phones"] = "#."
 
         # Read in sample file and code as IPA
-        results[identifier]["ipa"] = pronlex.read(fixture_path / f"{identifier}.txt", lang, dtype, dict_params).recode(
+        results[identifier]["ipa"] = pronlex.read(fixture_path / f"{identifier}.txt", dtype, lang, dict_params).recode(
             "ipa"
         )
 
@@ -42,7 +42,7 @@ def lex_objects(fixture_path):
     return results
 
 
-# Check converting between IPA and other phone codes works
+# Check converting between IPA and other phone codes works when reading form file
 @pytest.mark.parametrize("srcfile, codes", pronlex_conversions)
 def test_dictionaries_convert_phonecodes(srcfile, codes, tmp_path, fixture_path, lex_objects):
     for c1 in codes:

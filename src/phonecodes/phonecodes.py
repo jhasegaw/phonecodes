@@ -1,20 +1,20 @@
-#!/usr/bin/python3
-"""A set of convenience functions for converting among different phone codes.
-   Usage: 
-   import phonecodes
-   print phonecodes.CODES   # the known phone codes
-   print phonecodes.LANGUAGES # the known languages
-   s1 = phonecodes.convert(s0, code0, code1, language)
-   # s0 and s1 are strings containing individual symbols
-   # code0 and code1 must be members of phonecodes.CODES, of course
-   # language must be a member of phonecodes.LANGUAGES, of course
-   #   (but not all languages are known for all phone codes)
-   l1 = phonecodes.convertlist(l0, code0, code1, language)
-   # l0, l1 are lists of symbols
-   phonecodes.vowels
-   phonecodes.consonants
-   # list known IPA symbols of vowels, consonants.
-   # for other tables, see phonecode_tables.py
+"""
+A set of convenience functions for converting among different phone codes.
+Usage: 
+from phonecodes import phonecodes
+print phonecodes.CODES   # the known phone codes
+print phonecodes.LANGUAGES # the known languages
+s1 = phonecodes.convert(s0, code0, code1, language)
+# s0 and s1 are strings containing individual symbols
+# code0 and code1 must be members of phonecodes.CODES, of course
+# language must be a member of phonecodes.LANGUAGES, of course
+#   (but not all languages are known for all phone codes)
+l1 = phonecodes.convertlist(l0, code0, code1, language)
+# l0, l1 are lists of symbols
+phonecodes.vowels
+phonecodes.consonants
+# list known IPA symbols of vowels, consonants.
+# for other tables, see phonecode_tables.py
 """
 import phonecodes.phonecode_tables as phonecode_tables
 
@@ -209,8 +209,8 @@ _convertfuncs = {
 
 
 def _verify_code(code):
-    if code not in _convertfuncs.keys():
-        raise ValueError(f"{code} is not a valid phonecode. Choose from: {' '.join(_convertfuncs.keys())}")
+    if code not in CODES:
+        raise ValueError(f"{code} is not a valid phonecode. Choose from: {' '.join(CODES)}")
 
 
 def convert(s0, c0, c1, language=None):
@@ -228,13 +228,13 @@ def convert(s0, c0, c1, language=None):
     Returns:
         _type_: _description_
     """
+    _verify_code(c0)
+    _verify_code(c1)
 
     if c0 == "ipa" and c1 != "ipa":
-        _verify_code(c1)
         x = _convertfuncs[c1][1](s0, language)
         return x
     elif c0 != "ipa" and c1 == "ipa":
-        _verify_code(c0)
         return _convertfuncs[c0][0](s0, language)
     else:
         raise ValueError(f"Must convert to/from ipa, not {c0} to {c1}")

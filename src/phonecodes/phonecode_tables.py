@@ -1,3 +1,6 @@
+"""
+Tables mapping other phonecodes to/from IPA
+"""
 import re
 
 ###############################################################
