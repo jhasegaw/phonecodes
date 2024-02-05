@@ -16,7 +16,6 @@
    # list known IPA symbols of vowels, consonants.
    # for other tables, see phonecode_tables.py
 """
-import re, sys
 import phonecodes.phonecode_tables as phonecode_tables
 
 CODES = set(("ipa", "arpabet", "xsampa", "disc", "callhome"))
@@ -99,7 +98,7 @@ def xsampa2ipa(x, language):
 ######################################################################
 # Language-dependent lexical tones and stress markers
 def tone2ipa(n, language):
-    return phonecode_tables._tone2ipa[L][int(n[1:])]
+    return phonecode_tables._tone2ipa[language][int(n[1:])]
 
 
 #####################################################################

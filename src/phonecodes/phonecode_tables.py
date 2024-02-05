@@ -266,7 +266,6 @@ _disc2ipa = {
         "w": "w",
         "x": "x",
         "y": "y",
-        "y": "yː",
         "A": "ɑ",
         "B": "au",
         "C": "ŋ◌̩",
@@ -283,7 +282,6 @@ _disc2ipa = {
         "N": "ŋ",
         "O": "ɔ",
         "P": "ʋ",
-        "P": "l◌̩",
         "Q": "ɒ",
         "R": "ɜ◌˞",
         "S": "ʃ",
@@ -469,7 +467,7 @@ _callhome2ipa["spa"] = {
 _callhome2ipa["spa"].update(_tone2ipa["spa"])
 _callhome_vowels["spa"] = set("aieou")
 
-_ipa2callhome = {l: {v: k for (k, v) in d.items()} for (l, d) in _callhome2ipa.items()}
+_ipa2callhome = {symbol: {v: k for (k, v) in d.items()} for (symbol, d) in _callhome2ipa.items()}
 # special cases, e.g., define best choice for ambiguous mappings
 _ipa2callhome["arz"]["a"] = "a"
 
@@ -534,7 +532,7 @@ _arpabet2ipa.update(_tone2ipa["eng"])  # Add the English stress labels
 _arpabet_vowels = set((k for k in _arpabet2ipa.keys() if k[0] in "AEIOU"))
 
 _ipa2arpabet = {v: k for k, v in _arpabet2ipa.items()}
-_ipa2tone = {l: {v: k for k, v in d.items()} for l, d in _tone2ipa.items()}
+_ipa2tone = {symbol: {v: k for k, v in d.items()} for symbol, d in _tone2ipa.items()}
 
 _timit2ipa = _arpabet2ipa.copy()
 _timit2ipa.update(

@@ -1,4 +1,4 @@
-import sys, os, re
+import re
 import phonecodes.phonecodes as phonecodes
 import phonecodes.phonecode_tables as phonecode_tables
 
