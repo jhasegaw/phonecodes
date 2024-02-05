@@ -208,14 +208,36 @@ _convertfuncs = {
 }
 
 
-def convert(s0, c0, c1, language):
+def _verify_code(code):
+    if code not in _convertfuncs.keys():
+        raise ValueError(f"{code} is not a valid phonecode. Choose from: {" ".join(_convertfuncs.keys())}")
+
+
+def convert(s0, c0, c1, language=None):
+    """Convert a string between a given phonecode and IPA
+
+    Args:
+        s0 (str): The string to convert
+        c0 (str): Input phonecode: 'arpabet', 'xsampa','disc', 'callhome' or 'ipa'
+        c1 (str): Output phonecode:  'arpabet', 'xsampa','disc', 'callhome' or 'ipa'
+        language (str | None): The language of the string, optional since it is only required for 'disc' and 'callhome' phonecodes
+
+    Raises:
+        ValueError: If the phonecode is not a valid option
+
+    Returns:
+        _type_: _description_
+    """
+
     if c0 == "ipa" and c1 != "ipa":
+        _verify_code(c1)
         x = _convertfuncs[c1][1](s0, language)
         return x
     elif c0 != "ipa" and c1 == "ipa":
+        _verify_code(c0)
         return _convertfuncs[c0][0](s0, language)
     else:
-        raise RuntimeError("must convert to/from ipa, not %s to %s" % (c0, c1))
+        raise ValueError(f"Must convert to/from ipa, not {c0} to {c1}")
 
 
 def convertlist(l0, c0, c1, language):
