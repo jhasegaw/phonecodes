@@ -65,9 +65,6 @@ def sentences():
 @pytest.fixture(scope="session")
 def tokenized_sentences(sentences):
     return {
-        language: {
-            code: [token for token in S.split(" ")]
-            for (code, S) in code_to_chars.items()
-        }
+        language: {code: [token for token in S.split(" ")] for (code, S) in code_to_chars.items()}
         for (language, code_to_chars) in sentences.items()
     }

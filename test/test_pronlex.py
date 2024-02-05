@@ -32,9 +32,9 @@ def lex_objects(fixture_path):
             dict_params["discard_phones"] = "#."
 
         # Read in sample file and code as IPA
-        results[identifier]["ipa"] = pronlex.read(
-            fixture_path / f"{identifier}.txt", lang, dtype, dict_params
-        ).recode("ipa")
+        results[identifier]["ipa"] = pronlex.read(fixture_path / f"{identifier}.txt", lang, dtype, dict_params).recode(
+            "ipa"
+        )
 
         # Recode into supported alphabets
         for c in codes:
@@ -44,9 +44,7 @@ def lex_objects(fixture_path):
 
 # Check converting between IPA and other phone codes works
 @pytest.mark.parametrize("srcfile, codes", pronlex_conversions)
-def test_dictionaries_convert_phonecodes(
-    srcfile, codes, tmp_path, fixture_path, lex_objects
-):
+def test_dictionaries_convert_phonecodes(srcfile, codes, tmp_path, fixture_path, lex_objects):
     for c1 in codes:
         for c in [["ipa", c1], [c1, "ipa"]]:
             destfile = re.sub(r"sample", c[1], srcfile)
@@ -105,7 +103,7 @@ def test_phone_edit_distance(lex_objects, tokenized_sentences):
         "this is a test a",
         "this is test",
     ]
-    assert res[1] == [s.split() for s in expected_dist_1]            
+    assert res[1] == [s.split() for s in expected_dist_1]
 
     expected_dist_2 = [
         "a a this is a test",

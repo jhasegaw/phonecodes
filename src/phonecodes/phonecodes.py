@@ -148,9 +148,7 @@ def callhome2ipa(x, L):
             -1,
         )
     elif L == "cmn":
-        ol = attach_tones_to_vowels(
-            il, phonecode_tables._ipa_tones, phonecode_tables._ipa_vowels, -1, 1
-        )
+        ol = attach_tones_to_vowels(il, phonecode_tables._ipa_tones, phonecode_tables._ipa_vowels, -1, 1)
     elif L == "spa":
         ol = attach_tones_to_vowels(
             il,
@@ -166,17 +164,11 @@ def ipa2callhome(x, L):
     """Convert IPA symbol x into callhome notation, for language L"""
     (il, ttf) = translate_string(x, phonecode_tables._ipa2callhome[L])
     if L == "arz":
-        ol = attach_tones_to_vowels(
-            il, "012", phonecode_tables._callhome_vowels["arz"], 1, 1
-        )
+        ol = attach_tones_to_vowels(il, "012", phonecode_tables._callhome_vowels["arz"], 1, 1)
     elif L == "cmn":
-        ol = attach_tones_to_vowels(
-            il, "012345", phonecode_tables._callhome_vowels["cmn"], -1, 1
-        )
+        ol = attach_tones_to_vowels(il, "012345", phonecode_tables._callhome_vowels["cmn"], -1, 1)
     elif L == "spa":
-        ol = attach_tones_to_vowels(
-            il, "012", phonecode_tables._callhome_vowels["spa"], 1, 1
-        )
+        ol = attach_tones_to_vowels(il, "012", phonecode_tables._callhome_vowels["spa"], 1, 1)
     return "".join(ol)
 
 
@@ -185,9 +177,7 @@ def ipa2callhome(x, L):
 def arpabet2ipa(x, language):
     """Convert ARPABET symbol X to IPA"""
     (il, ttf) = translate_string(x, phonecode_tables._arpabet2ipa)
-    ol = attach_tones_to_vowels(
-        il, phonecode_tables._ipa_stressmarkers, phonecode_tables._ipa_vowels, -1, -1
-    )
+    ol = attach_tones_to_vowels(il, phonecode_tables._ipa_stressmarkers, phonecode_tables._ipa_vowels, -1, -1)
     return "".join(ol)
 
 
@@ -202,9 +192,7 @@ def timit2ipa(x, L):
     """Convert TIMIT phone codes to IPA"""
     x = x.upper()
     (il, ttf) = translate_string(x, phonecode_tables._timit2ipa)
-    ol = attach_tones_to_vowels(
-        il, phonecode_tables._ipa_stressmarkers, phonecode_tables._ipa_vowels, -1, -1
-    )
+    ol = attach_tones_to_vowels(il, phonecode_tables._ipa_stressmarkers, phonecode_tables._ipa_vowels, -1, -1)
     return "".join(ol)
 
 

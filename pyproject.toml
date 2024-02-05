@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools >= 61.0"]
+requires = ["setuptools >= 61.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -28,5 +28,13 @@ test = [
 
 # Dependencies that are useful only to developers, like an autoformatter and support for visualizations in jupyter notebooks go here
 dev = [
-    "ruff",
+    "ruff"
 ]
+
+[project.urls]
+Homepage = "https://github.com/ginic/phonecodes"
+
+[tool.ruff]
+line-length = 120
+
+target-version = "py310"

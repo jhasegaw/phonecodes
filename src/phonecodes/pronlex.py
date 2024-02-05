@@ -166,9 +166,7 @@ def read_celex_dictfile(filename, lang, params):
             word = re.sub(r"\s+", "_", words[1])
             options = words[pcol].split("\\")
             for option in options:
-                ol = phonecodes.attach_tones_to_vowels(
-                    list(option), set("'"), phonecode_tables._disc_vowels, 1, -1
-                )
+                ol = phonecodes.attach_tones_to_vowels(list(option), set("'"), phonecode_tables._disc_vowels, 1, -1)
                 S.append((word, ol))
     return S
 
@@ -196,14 +194,9 @@ def read_callhome_dictfile(filename, L, params):
             if len(tone_options) == 1:
                 options = [(tone_options[0], s) for s in syl_options]
             elif len(tone_options) == len(syl_options):
-                options = [
-                    (tone_options[n], syl_options[n])
-                    for n in range(0, len(syl_options))
-                ]
+                options = [(tone_options[n], syl_options[n]) for n in range(0, len(syl_options))]
             else:
-                raise KeyError(
-                    "tone_options and syl_options mismatched: {}".format(line.rstrip())
-                )
+                raise KeyError("tone_options and syl_options mismatched: {}".format(line.rstrip()))
             for option in options:
                 syls = option[1].split(" ")
                 tones = list(option[0])
@@ -227,11 +220,7 @@ def write_dictfile(w2p, filename):
     lines2write = set()  # make sure each written line is unique
     for w, pron in w2p.items():
         if len(w) > 0 and len(pron) > 0:
-            pl = [
-                re.sub(r"\s*Í¡\s*", "", p)
-                for p in pron
-                if not p.isspace() and len(p) > 0
-            ]
+            pl = [re.sub(r"\s*Í¡\s*", "", p) for p in pron if not p.isspace() and len(p) > 0]
             pstr = " ".join(pl)
             if len(pstr) > 0:
                 lines2write.add("%s\t%s\n" % (w, pstr))
@@ -272,9 +261,7 @@ class lex:
             return self.copy()
         else:
             other = lex(self.language, code1)
-            other.p2w = dict_convert_phonecode(
-                self.p2w, self.phonecode, code1, self.language
-            )
+            other.p2w = dict_convert_phonecode(self.p2w, self.phonecode, code1, self.language)
             for w, p in self.w2p.items():
                 q = phonecodes.convertlist(p, self.phonecode, code1, self.language)
                 other.w2p[w] = q
