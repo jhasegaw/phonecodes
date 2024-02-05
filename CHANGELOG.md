@@ -8,8 +8,16 @@ You should also add project tags for each release in Github, see [Managing relea
 
 # [Unreleased]
 ### Added
+- Modern python packaging, including pyproject.toml
+- Contribution guidelines 
+- Changelog with sematic versioning
+- Usage examples in README
+- Unit tests using pytest and triggered by Github Action on pull request
+- Checks and linting with Ruff
 
 ### Changed
+- Ordering of language and corpus code in phonecodes.pronlex.read
+- Removed duplicated dictionary keys in phonecodes.phonecode_tables
 
 ### Removed
 
