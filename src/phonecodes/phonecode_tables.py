@@ -281,7 +281,11 @@ _disc2ipa = {
         "M": "ɯ",
         "N": "ŋ",
         "O": "ɔ",
-        "P": "ʋ",
+        # TODO: resolve this duplication more carefully, since we cannot have duplicate keys.
+        # This appears to be X-SAMPA only according to https://wellformedness.com/papers/codes/ and https://en.wikipedia.org/wiki/X-SAMPA, but it may be language specific.
+        # Likely need to review https://catalog.ldc.upenn.edu/LDC96L14 to resolve this.
+        # "P": "ʋ",
+        "P": "l◌̩",
         "Q": "ɒ",
         "R": "ɜ◌˞",
         "S": "ʃ",
