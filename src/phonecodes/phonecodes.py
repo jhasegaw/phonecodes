@@ -210,7 +210,7 @@ _convertfuncs = {
 
 def _verify_code(code):
     if code not in _convertfuncs.keys():
-        raise ValueError(f"{code} is not a valid phonecode. Choose from: {" ".join(_convertfuncs.keys())}")
+        raise ValueError(f"{code} is not a valid phonecode. Choose from: {' '.join(_convertfuncs.keys())}")
 
 
 def convert(s0, c0, c1, language=None):
