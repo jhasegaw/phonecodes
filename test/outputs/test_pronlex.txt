@@ -1,0 +1,366 @@
+Reading isle dict in eng from isle_eng_sample
+##########################################################
+# Testing isle_eng_sample[ipa].recode(arpabet)
+isle_eng_sample -> isle_eng_arpabet
+Pass
+##########################################################
+# Testing isle_eng_sample[arpabet].recode(ipa)
+isle_eng_sample -> isle_eng_ipa
+Pass
+##########################################################
+# Testing isle_eng_sample[ipa].recode(disc)
+isle_eng_sample -> isle_eng_disc
+Pass
+##########################################################
+# Testing isle_eng_sample[disc].recode(ipa)
+isle_eng_sample -> isle_eng_ipa
+Pass
+##########################################################
+# Testing isle_eng_sample[ipa].recode(xsampa)
+isle_eng_sample -> isle_eng_xsampa
+Pass
+##########################################################
+# Testing isle_eng_sample[xsampa].recode(ipa)
+isle_eng_sample -> isle_eng_ipa
+Pass
+Reading babel dict in amh from babel_amh_sample
+##########################################################
+# Testing babel_amh_sample[ipa].recode(xsampa)
+babel_amh_sample -> babel_amh_xsampa
+Pass
+##########################################################
+# Testing babel_amh_sample[xsampa].recode(ipa)
+babel_amh_sample -> babel_amh_ipa
+Pass
+Reading babel dict in ben from babel_ben_sample
+##########################################################
+# Testing babel_ben_sample[ipa].recode(xsampa)
+babel_ben_sample -> babel_ben_xsampa
+Pass
+##########################################################
+# Testing babel_ben_sample[xsampa].recode(ipa)
+babel_ben_sample -> babel_ben_ipa
+Pass
+Reading celex dict in deu from celex_deu_sample
+##########################################################
+# Testing celex_deu_sample[ipa].recode(disc)
+celex_deu_sample -> celex_deu_disc
+Pass
+##########################################################
+# Testing celex_deu_sample[disc].recode(ipa)
+celex_deu_sample -> celex_deu_ipa
+Pass
+##########################################################
+# Testing celex_deu_sample[ipa].recode(xsampa)
+celex_deu_sample -> celex_deu_xsampa
+Pass
+##########################################################
+# Testing celex_deu_sample[xsampa].recode(ipa)
+celex_deu_sample -> celex_deu_ipa
+Pass
+Reading celex dict in eng from celex_eng_sample
+##########################################################
+# Testing celex_eng_sample[ipa].recode(arpabet)
+celex_eng_sample -> celex_eng_arpabet
+Pass
+##########################################################
+# Testing celex_eng_sample[arpabet].recode(ipa)
+celex_eng_sample -> celex_eng_ipa
+Pass
+##########################################################
+# Testing celex_eng_sample[ipa].recode(disc)
+celex_eng_sample -> celex_eng_disc
+Pass
+##########################################################
+# Testing celex_eng_sample[disc].recode(ipa)
+celex_eng_sample -> celex_eng_ipa
+Pass
+##########################################################
+# Testing celex_eng_sample[ipa].recode(xsampa)
+celex_eng_sample -> celex_eng_xsampa
+Pass
+##########################################################
+# Testing celex_eng_sample[xsampa].recode(ipa)
+celex_eng_sample -> celex_eng_ipa
+Pass
+Reading celex dict in nld from celex_nld_sample
+##########################################################
+# Testing celex_nld_sample[ipa].recode(disc)
+celex_nld_sample -> celex_nld_disc
+Pass
+##########################################################
+# Testing celex_nld_sample[disc].recode(ipa)
+celex_nld_sample -> celex_nld_ipa
+Pass
+##########################################################
+# Testing celex_nld_sample[ipa].recode(xsampa)
+celex_nld_sample -> celex_nld_xsampa
+Pass
+##########################################################
+# Testing celex_nld_sample[xsampa].recode(ipa)
+celex_nld_sample -> celex_nld_ipa
+Pass
+Reading callhome dict in arz from callhome_arz_sample
+##########################################################
+# Testing callhome_arz_sample[ipa].recode(callhome)
+callhome_arz_sample -> callhome_arz_callhome
+Pass
+##########################################################
+# Testing callhome_arz_sample[callhome].recode(ipa)
+callhome_arz_sample -> callhome_arz_ipa
+Pass
+##########################################################
+# Testing callhome_arz_sample[ipa].recode(xsampa)
+callhome_arz_sample -> callhome_arz_xsampa
+Pass
+##########################################################
+# Testing callhome_arz_sample[xsampa].recode(ipa)
+callhome_arz_sample -> callhome_arz_ipa
+Pass
+Reading callhome dict in cmn from callhome_cmn_sample
+##########################################################
+# Testing callhome_cmn_sample[ipa].recode(callhome)
+callhome_cmn_sample -> callhome_cmn_callhome
+Pass
+##########################################################
+# Testing callhome_cmn_sample[callhome].recode(ipa)
+callhome_cmn_sample -> callhome_cmn_ipa
+Pass
+##########################################################
+# Testing callhome_cmn_sample[ipa].recode(xsampa)
+callhome_cmn_sample -> callhome_cmn_xsampa
+Pass
+##########################################################
+# Testing callhome_cmn_sample[xsampa].recode(ipa)
+callhome_cmn_sample -> callhome_cmn_ipa
+Pass
+Reading callhome dict in spa from callhome_spa_sample
+##########################################################
+# Testing callhome_spa_sample[ipa].recode(callhome)
+callhome_spa_sample -> callhome_spa_callhome
+Pass
+##########################################################
+# Testing callhome_spa_sample[callhome].recode(ipa)
+callhome_spa_sample -> callhome_spa_ipa
+Pass
+##########################################################
+# Testing callhome_spa_sample[ipa].recode(xsampa)
+callhome_spa_sample -> callhome_spa_xsampa
+Pass
+##########################################################
+# Testing callhome_spa_sample[xsampa].recode(ipa)
+callhome_spa_sample -> callhome_spa_ipa
+Pass
+##########################################################
+# Testing words2phones(isle_eng_sample,ipa)
+Pass
+##########################################################
+# Testing phones2words(isle_eng_sample,ipa)
+Pass
+##########################################################
+# Testing words2phones(isle_eng_sample,arpabet)
+Pass
+##########################################################
+# Testing phones2words(isle_eng_sample,arpabet)
+Pass
+##########################################################
+# Testing words2phones(isle_eng_sample,disc)
+Pass
+##########################################################
+# Testing phones2words(isle_eng_sample,disc)
+Pass
+##########################################################
+# Testing words2phones(isle_eng_sample,xsampa)
+Pass
+##########################################################
+# Testing phones2words(isle_eng_sample,xsampa)
+Pass
+##########################################################
+# Testing words2phones(babel_amh_sample,ipa)
+Pass
+##########################################################
+# Testing phones2words(babel_amh_sample,ipa)
+Pass
+##########################################################
+# Testing words2phones(babel_amh_sample,xsampa)
+Pass
+##########################################################
+# Testing phones2words(babel_amh_sample,xsampa)
+Pass
+##########################################################
+# Testing words2phones(babel_ben_sample,ipa)
+Pass
+##########################################################
+# Testing phones2words(babel_ben_sample,ipa)
+Pass
+##########################################################
+# Testing words2phones(babel_ben_sample,xsampa)
+Pass
+##########################################################
+# Testing phones2words(babel_ben_sample,xsampa)
+Pass
+##########################################################
+# Testing words2phones(celex_deu_sample,ipa)
+Pass
+##########################################################
+# Testing phones2words(celex_deu_sample,ipa)
+Pass
+##########################################################
+# Testing words2phones(celex_deu_sample,disc)
+Pass
+##########################################################
+# Testing phones2words(celex_deu_sample,disc)
+Pass
+##########################################################
+# Testing words2phones(celex_deu_sample,xsampa)
+Pass
+##########################################################
+# Testing phones2words(celex_deu_sample,xsampa)
+Pass
+##########################################################
+# Testing words2phones(celex_eng_sample,ipa)
+Pass
+##########################################################
+# Testing phones2words(celex_eng_sample,ipa)
+Pass
+##########################################################
+# Testing words2phones(celex_eng_sample,arpabet)
+Pass
+##########################################################
+# Testing phones2words(celex_eng_sample,arpabet)
+Pass
+##########################################################
+# Testing words2phones(celex_eng_sample,disc)
+Pass
+##########################################################
+# Testing phones2words(celex_eng_sample,disc)
+Pass
+##########################################################
+# Testing words2phones(celex_eng_sample,xsampa)
+Pass
+##########################################################
+# Testing phones2words(celex_eng_sample,xsampa)
+Pass
+##########################################################
+# Testing words2phones(celex_nld_sample,ipa)
+Pass
+##########################################################
+# Testing phones2words(celex_nld_sample,ipa)
+Pass
+##########################################################
+# Testing words2phones(celex_nld_sample,disc)
+Pass
+##########################################################
+# Testing phones2words(celex_nld_sample,disc)
+Pass
+##########################################################
+# Testing words2phones(celex_nld_sample,xsampa)
+Pass
+##########################################################
+# Testing phones2words(celex_nld_sample,xsampa)
+Pass
+##########################################################
+# Testing words2phones(callhome_arz_sample,ipa)
+Pass
+##########################################################
+# Testing phones2words(callhome_arz_sample,ipa)
+Pass
+##########################################################
+# Testing words2phones(callhome_arz_sample,callhome)
+Pass
+##########################################################
+# Testing phones2words(callhome_arz_sample,callhome)
+Pass
+##########################################################
+# Testing words2phones(callhome_arz_sample,xsampa)
+Pass
+##########################################################
+# Testing phones2words(callhome_arz_sample,xsampa)
+Pass
+##########################################################
+# Testing words2phones(callhome_cmn_sample,ipa)
+Pass
+##########################################################
+# Testing phones2words(callhome_cmn_sample,ipa)
+Pass
+##########################################################
+# Testing words2phones(callhome_cmn_sample,callhome)
+Pass
+##########################################################
+# Testing phones2words(callhome_cmn_sample,callhome)
+Pass
+##########################################################
+# Testing words2phones(callhome_cmn_sample,xsampa)
+Pass
+##########################################################
+# Testing phones2words(callhome_cmn_sample,xsampa)
+Pass
+##########################################################
+# Testing words2phones(callhome_spa_sample,ipa)
+Pass
+##########################################################
+# Testing phones2words(callhome_spa_sample,ipa)
+Pass
+##########################################################
+# Testing words2phones(callhome_spa_sample,callhome)
+Pass
+##########################################################
+# Testing phones2words(callhome_spa_sample,callhome)
+Pass
+##########################################################
+# Testing words2phones(callhome_spa_sample,xsampa)
+Pass
+##########################################################
+# Testing phones2words(callhome_spa_sample,xsampa)
+Pass
+
+##########################################################
+# Testing phones2words(isle_eng_sample) with dist==2
+### Candidates with string edit distance == 0
+this is a test
+### Candidates with string edit distance == 1
+a this is a test
+this a is a test
+this is a a test
+this is a a test
+this is a test a
+this is test
+### Candidates with string edit distance == 2
+a a this is a test
+a this a is a test
+a this is a a test
+a this is a a test
+a this is a test a
+a this is test
+is is a test
+is this is a test
+this a a is a test
+this a is a a test
+this a is a a test
+this a is a test
+this a is a test a
+this a is test
+this is a a a test
+this is a a a test
+this is a a a test
+this is a a test
+this is a a test a
+this is a a test a
+this is a is test
+this is a test
+this is a test
+this is a test
+this is a test
+this is a test
+this is a test
+this is a test
+this is a test
+this is a test
+this is a test a a
+this is a test is
+this is is a test
+this is is a test
+this is is a test
+this is is test
+this is test a
+this this a test
